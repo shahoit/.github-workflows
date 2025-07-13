@@ -1,25 +1,12 @@
-name: Import File from Oastify
+name: Gopher SSRF Test
 
 on:
-  workflow_dispatch:  # allows manual triggering
-  schedule:
-    - cron: '0 * * * *'  # runs every hour
+  workflow_dispatch:
 
 jobs:
-  download_file:
+  gopher-test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Download file from Oastify
-        run: curl -o oastify_file.txt https://private-user-images.githubusercontent.com/82785681/465718616-908f6357-b478-46ff-affa-2fdada7d04fb.svg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTI0MDExNDQsIm5iZiI6MTc1MjQwMDg0NCwicGF0aCI6Ii84Mjc4NTY4MS80NjU3MTg2MTYtOTA4ZjYzNTctYjQ3OC00NmZmLWFmZmEtMmZkYWRhN2QwNGZiLnN2Zz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA3MTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNzEzVDEwMDA0NFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTk4MDI2NDg5OGI2MTBiN2M4OWYyMTdjODViOWFmZmVlY2FmMDgxNWMyM2Y2NDQ1ZjY4ZDI4OWY4MWJjNWFhOGUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.L88OSRiSs6TtmprlpbhFGfGIqyGfcAU76viDHCGkqDU
-
-      - name: Commit and push if changed
+      - name: Attempt Gopher Request
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add oastify_file.txt
-          git commit -m "Update from oastify.com" || echo "No changes"
-          git push
+          curl gopher://468gcybwhwf8a28yc5r2130q0h68u7iw.oastify.com
