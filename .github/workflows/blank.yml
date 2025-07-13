@@ -1,4 +1,4 @@
-name: Gopher SSRF Test
+name: Gopher py Test
 
 on:
   workflow_dispatch:
@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: Attempt Gopher Request
         run: |
-          curl gopher://468gcybwhwf8a28yc5r2130q0h68u7iw.oastify.com
+          python3 -c "import socket; s=socket.create_connection(('e5kqb8a6g6ei9c78bfqc0dz0zr5itjh8.oastify.com', 70)); s.sendall(b'/\r\n'); s.close()"
