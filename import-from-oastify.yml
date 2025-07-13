@@ -1,0 +1,25 @@
+name: Import File from Oastify
+
+on:
+  workflow_dispatch:  # allows manual triggering
+  schedule:
+    - cron: '0 * * * *'  # runs every hour
+
+jobs:
+  download_file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download file from Oastify
+        run: curl -o oastify_file.txt http://0yzc4u3s9s742y0u41jytzsmsdy4m1aq.oastify.com
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add oastify_file.txt
+          git commit -m "Update from oastify.com" || echo "No changes"
+          git push
